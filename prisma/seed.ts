@@ -9,7 +9,7 @@ async function main() {
   // Create admin user
   const adminEmail = process.env.ADMIN_EMAIL || 'admin@example.com'
   const adminPassword = process.env.ADMIN_PASSWORD || 'Admin123!@#'
-  
+
   const hashedPassword = await bcrypt.hash(adminPassword, 12)
 
   const admin = await prisma.user.upsert({

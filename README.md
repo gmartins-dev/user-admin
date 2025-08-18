@@ -9,12 +9,14 @@ Uma aplicação web completa de gerenciamento de usuários desenvolvida com **Ne
 - **Login Seguro**: Autenticação com email e senha
 - **Dashboard Pessoal**: Área protegida para visualizar informações pessoais
 - **Perfil Completo**: Visualização de dados pessoais e de localização
+- **Modo Escuro**: Interface adaptável com tema claro/escuro/sistema
 
 ### 🛡️ Para Administradores
 - **Painel Administrativo**: Interface completa para gerenciamento de usuários
 - **Estatísticas em Tempo Real**: Dashboards com métricas importantes
 - **CRUD de Usuários**: Listar, editar e deletar usuários
 - **Controle de Acesso**: Proteção de rotas por nível de permissão
+- **Interface Moderna**: Design responsivo com suporte a modo escuro
 
 ## 🛠️ Tecnologias Utilizadas
 
@@ -27,10 +29,11 @@ Uma aplicação web completa de gerenciamento de usuários desenvolvida com **Ne
 - **API Externa**: ViaCEP para consulta de endereços
 - **Hash de Senhas**: bcryptjs
 - **Notificações**: Sonner (toast)
+- **Tema**: Sistema customizado para modo claro/escuro
 
 ## 📋 Pré-requisitos
 
-- Node.js 18+ 
+- Node.js 18+
 - pnpm (recomendado) ou npm
 
 ## 🚀 Instalação e Execução
@@ -145,7 +148,7 @@ pnpm lint                  # Executa linter
 ### Senha
 - Mínimo 8 caracteres
 - Pelo menos 1 letra minúscula
-- Pelo menos 1 letra maiúscula  
+- Pelo menos 1 letra maiúscula
 - Pelo menos 1 número
 - Pelo menos 1 caractere especial
 
@@ -170,7 +173,7 @@ pnpm lint                  # Executa linter
 - **Framework**: Tailwind CSS
 - **Componentes**: Shadcn/ui
 - **Abordagem**: Mobile-first, responsivo
-- **Tema**: Claro com suporte a modo escuro (preparado)
+- **Tema**: Sistema de temas com suporte a modo claro/escuro/sistema
 - **Tipografia**: Geist Sans e Geist Mono
 
 ## 🔧 Configurações de Desenvolvimento
@@ -203,6 +206,7 @@ pnpm lint                  # Executa linter
 - [x] Validação de formulários
 - [x] Integração com API de CEP
 - [x] Interface responsiva
+- [x] Modo escuro/claro
 - [x] Documentação completa
 
 ---

@@ -38,20 +38,20 @@ export function UserProfile({ user }: UserProfileProps) {
         </CardHeader>
         <CardContent className="space-y-4">
           <div>
-            <label className="text-sm font-medium text-gray-600">Nome</label>
-            <p className="text-lg font-medium">{user.name}</p>
+            <label className="text-sm font-medium text-muted-foreground">Nome</label>
+            <p className="text-lg font-medium text-foreground">{user.name}</p>
           </div>
-          
+
           <div>
-            <label className="text-sm font-medium text-gray-600">Email</label>
+            <label className="text-sm font-medium text-muted-foreground">Email</label>
             <div className="flex items-center space-x-2">
-              <Mail className="h-4 w-4 text-gray-400" />
-              <p>{user.email}</p>
+              <Mail className="h-4 w-4 text-muted-foreground" />
+              <p className="text-foreground">{user.email}</p>
             </div>
           </div>
-          
+
           <div>
-            <label className="text-sm font-medium text-gray-600">Tipo de Usuário</label>
+            <label className="text-sm font-medium text-muted-foreground">Tipo de Usuário</label>
             <div className="mt-1">
               <Badge variant={user.role === 'ADMIN' ? 'default' : 'secondary'}>
                 {user.role === 'ADMIN' ? 'Administrador' : 'Usuário'}
@@ -73,22 +73,22 @@ export function UserProfile({ user }: UserProfileProps) {
           {user.cep ? (
             <>
               <div>
-                <label className="text-sm font-medium text-gray-600">CEP</label>
-                <p>{user.cep}</p>
+                <label className="text-sm font-medium text-muted-foreground">CEP</label>
+                <p className="text-foreground">{user.cep}</p>
               </div>
-              
+
               <div>
-                <label className="text-sm font-medium text-gray-600">Estado</label>
-                <p>{user.state}</p>
+                <label className="text-sm font-medium text-muted-foreground">Estado</label>
+                <p className="text-foreground">{user.state}</p>
               </div>
-              
+
               <div>
-                <label className="text-sm font-medium text-gray-600">Cidade</label>
-                <p>{user.city}</p>
+                <label className="text-sm font-medium text-muted-foreground">Cidade</label>
+                <p className="text-foreground">{user.city}</p>
               </div>
             </>
           ) : (
-            <p className="text-gray-500 italic">
+            <p className="text-muted-foreground italic">
               Nenhuma informação de localização cadastrada
             </p>
           )}
@@ -105,10 +105,10 @@ export function UserProfile({ user }: UserProfileProps) {
         </CardHeader>
         <CardContent>
           <div>
-            <label className="text-sm font-medium text-gray-600">
+            <label className="text-sm font-medium text-muted-foreground">
               Data de Cadastro
             </label>
-            <p className="text-lg">{formatDate(user.createdAt)}</p>
+            <p className="text-lg text-foreground">{formatDate(user.createdAt)}</p>
           </div>
         </CardContent>
       </Card>

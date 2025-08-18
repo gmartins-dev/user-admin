@@ -142,7 +142,7 @@ export function UsersTable({ users, currentUserId }: UsersTableProps) {
                     </TableCell>
                     <TableCell>{user.email}</TableCell>
                     <TableCell>
-                      <Badge 
+                      <Badge
                         variant={user.role === 'ADMIN' ? 'default' : 'secondary'}
                       >
                         {user.role === 'ADMIN' ? 'Admin' : 'Usuário'}
@@ -167,8 +167,8 @@ export function UsersTable({ users, currentUserId }: UsersTableProps) {
                     <TableCell>
                       <DropdownMenu>
                         <DropdownMenuTrigger asChild>
-                          <Button 
-                            variant="ghost" 
+                          <Button
+                            variant="ghost"
                             className="h-8 w-8 p-0"
                             disabled={user.id === currentUserId}
                           >
@@ -180,7 +180,7 @@ export function UsersTable({ users, currentUserId }: UsersTableProps) {
                             <Edit className="mr-2 h-4 w-4" />
                             Editar
                           </DropdownMenuItem>
-                          <DropdownMenuItem 
+                          <DropdownMenuItem
                             onClick={() => handleDelete(user)}
                             className="text-red-600 focus:text-red-600"
                           >
@@ -194,7 +194,7 @@ export function UsersTable({ users, currentUserId }: UsersTableProps) {
                 ))}
               </TableBody>
             </Table>
-            
+
             {users.length === 0 && (
               <div className="text-center py-8 text-gray-500">
                 Nenhum usuário encontrado

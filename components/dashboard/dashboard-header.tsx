@@ -3,6 +3,7 @@
 import { signOut } from "next-auth/react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
+import { ModeToggle } from "@/components/theme-toggle"
 import { User, LogOut, Settings } from "lucide-react"
 
 interface DashboardHeaderProps {
@@ -19,24 +20,24 @@ export function DashboardHeader({ user }: DashboardHeaderProps) {
   }
 
   return (
-    <header className="bg-white shadow">
+    <header className="bg-background border-b border-border shadow-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center py-6">
           <div className="flex items-center">
             <div className="flex items-center space-x-2">
-              <User className="h-8 w-8 text-blue-600" />
-              <h1 className="text-xl font-bold text-gray-900">
+              <User className="h-8 w-8 text-primary" />
+              <h1 className="text-xl font-bold text-foreground">
                 Sistema de Usuários
               </h1>
             </div>
           </div>
-          
+
           <div className="flex items-center space-x-4">
-            <div className="text-sm text-gray-600">
-              <p className="font-medium">{user.name}</p>
+            <div className="text-sm text-muted-foreground">
+              <p className="font-medium text-foreground">{user.name}</p>
               <p className="text-xs">{user.email}</p>
             </div>
-            
+
             {user.role === "ADMIN" && (
               <Link href="/admin">
                 <Button variant="outline" size="sm">
@@ -45,7 +46,9 @@ export function DashboardHeader({ user }: DashboardHeaderProps) {
                 </Button>
               </Link>
             )}
-            
+
+            <ModeToggle />
+
             <Button variant="outline" size="sm" onClick={handleLogout}>
               <LogOut className="h-4 w-4 mr-2" />
               Sair

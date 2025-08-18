@@ -6,11 +6,11 @@ import bcrypt from "bcryptjs"
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
-    
+
     const validation = registerSchema.safeParse(body)
     if (!validation.success) {
       return NextResponse.json(
-        { 
+        {
           error: "Dados inválidos",
           details: validation.error.flatten().fieldErrors
         },

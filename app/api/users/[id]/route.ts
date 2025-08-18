@@ -17,7 +17,7 @@ export async function PUT(
 ) {
   try {
     const session = await getServerSession(authOptions)
-    
+
     if (!session || session.user.role !== "ADMIN") {
       return NextResponse.json(
         { error: "Acesso negado" },
@@ -27,10 +27,10 @@ export async function PUT(
 
     const body = await request.json()
     const validation = updateUserSchema.safeParse(body)
-    
+
     if (!validation.success) {
       return NextResponse.json(
-        { 
+        {
           error: "Dados inválidos",
           details: validation.error.flatten().fieldErrors
         },
@@ -103,7 +103,7 @@ export async function DELETE(
 ) {
   try {
     const session = await getServerSession(authOptions)
-    
+
     if (!session || session.user.role !== "ADMIN") {
       return NextResponse.json(
         { error: "Acesso negado" },

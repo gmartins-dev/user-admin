@@ -38,7 +38,7 @@ export default function RegisterPage() {
     try {
       const cleanCep = cep.replace(/\D/g, "")
       const response = await fetch(`/api/cep?cep=${cleanCep}`)
-      
+
       if (response.ok) {
         const data = await response.json()
         form.setValue("state", data.state)
@@ -86,17 +86,17 @@ export default function RegisterPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen flex items-center justify-center bg-background py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md w-full space-y-8">
         <div className="text-center">
-          <h2 className="mt-6 text-3xl font-bold tracking-tight text-gray-900">
+          <h2 className="mt-6 text-3xl font-bold tracking-tight text-foreground">
             Criar nova conta
           </h2>
-          <p className="mt-2 text-sm text-gray-600">
+          <p className="mt-2 text-sm text-muted-foreground">
             Ou{" "}
             <Link
               href="/login"
-              className="font-medium text-blue-600 hover:text-blue-500"
+              className="font-medium text-primary hover:text-primary/80"
             >
               faça login em sua conta existente
             </Link>
@@ -178,7 +178,7 @@ export default function RegisterPage() {
                           const value = e.target.value.replace(/\D/g, "")
                           const formattedValue = value.replace(/(\d{5})(\d)/, "$1-$2")
                           field.onChange(formattedValue)
-                          
+
                           if (value.length === 8) {
                             handleCepLookup(value)
                           }
@@ -229,9 +229,9 @@ export default function RegisterPage() {
               />
             </div>
 
-            <Button 
-              type="submit" 
-              className="w-full" 
+            <Button
+              type="submit"
+              className="w-full"
               disabled={isLoading || isLoadingCep}
             >
               {isLoading ? "Criando conta..." : "Criar conta"}

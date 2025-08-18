@@ -43,11 +43,11 @@ interface EditUserDialogProps {
   onSuccess: () => void
 }
 
-export function EditUserDialog({ 
-  user, 
-  open, 
-  onOpenChange, 
-  onSuccess 
+export function EditUserDialog({
+  user,
+  open,
+  onOpenChange,
+  onSuccess
 }: EditUserDialogProps) {
   const [isLoading, setIsLoading] = useState(false)
 

@@ -46,7 +46,7 @@ export default function LoginPage() {
         toast.error("Email ou senha incorretos")
       } else {
         toast.success("Login realizado com sucesso!")
-        
+
         // Get session to check user role
         const session = await getSession()
         if (session?.user?.role === "ADMIN") {
@@ -64,17 +64,17 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen flex items-center justify-center bg-background py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md w-full space-y-8">
         <div className="text-center">
-          <h2 className="mt-6 text-3xl font-bold tracking-tight text-gray-900">
+          <h2 className="mt-6 text-3xl font-bold tracking-tight text-foreground">
             Faça login em sua conta
           </h2>
-          <p className="mt-2 text-sm text-gray-600">
+          <p className="mt-2 text-sm text-muted-foreground">
             Ou{" "}
             <Link
               href="/register"
-              className="font-medium text-blue-600 hover:text-blue-500"
+              className="font-medium text-primary hover:text-primary/80"
             >
               crie uma nova conta
             </Link>
@@ -127,7 +127,7 @@ export default function LoginPage() {
           </form>
         </Form>
 
-        <div className="text-center text-sm text-gray-600">
+        <div className="text-center text-sm text-muted-foreground">
           <p>Credenciais do administrador para teste:</p>
           <p className="font-mono">admin@example.com / Admin123!@#</p>
         </div>
