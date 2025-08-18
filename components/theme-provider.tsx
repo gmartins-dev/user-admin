@@ -47,7 +47,7 @@ export function ThemeProvider({
       
       const finalTheme = systemPrefersDark ? "dark" : defaultTheme
       setTheme(finalTheme)
-    } catch (e) {
+    } catch {
       setTheme(defaultTheme)
     }
   }, [defaultTheme, storageKey])

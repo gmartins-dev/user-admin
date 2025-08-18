@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server"
-import { cepSchema } from "@/lib/validations"
+import { cepLookupSchema } from "@/lib/validations"
 
 interface ViaCEPResponse {
   cep: string
@@ -27,7 +27,7 @@ export async function GET(request: NextRequest) {
       )
     }
 
-    const validation = cepSchema.safeParse({ cep })
+    const validation = cepLookupSchema.safeParse({ cep })
     if (!validation.success) {
       return NextResponse.json(
         { error: "CEP inválido" },

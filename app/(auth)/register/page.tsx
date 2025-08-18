@@ -8,7 +8,6 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { registerSchema, type RegisterInput } from "@/lib/validations"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { toast } from "sonner"
 
@@ -28,8 +27,6 @@ export default function RegisterPage() {
       city: "",
     },
   })
-
-  const watchCep = form.watch("cep")
 
   const handleCepLookup = async (cep: string) => {
     if (!cep || cep.length < 8) return

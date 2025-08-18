@@ -5,9 +5,9 @@ import { prisma } from "@/lib/db"
 import { updateUserSchema } from "@/lib/validations"
 
 interface RouteParams {
-  params: {
+  params: Promise<{
     id: string
-  }
+  }>
 }
 
 // PUT - Update user (admin only)
@@ -16,6 +16,7 @@ export async function PUT(
   { params }: RouteParams
 ) {
   try {
+    const resolvedParams = await params
     const session = await getServerSession(authOptions)
 
     if (!session || session.user.role !== "ADMIN") {
@@ -42,7 +43,7 @@ export async function PUT(
 
     // Check if user exists
     const existingUser = await prisma.user.findUnique({
-      where: { id: params.id }
+      where: { id: resolvedParams.id }
     })
 
     if (!existingUser) {
@@ -67,7 +68,7 @@ export async function PUT(
     }
 
     const updatedUser = await prisma.user.update({
-      where: { id: params.id },
+      where: { id: resolvedParams.id },
       data: { name, email },
       select: {
         id: true,
@@ -102,6 +103,7 @@ export async function DELETE(
   { params }: RouteParams
 ) {
   try {
+    const resolvedParams = await params
     const session = await getServerSession(authOptions)
 
     if (!session || session.user.role !== "ADMIN") {
@@ -113,7 +115,7 @@ export async function DELETE(
 
     // Check if user exists
     const existingUser = await prisma.user.findUnique({
-      where: { id: params.id }
+      where: { id: resolvedParams.id }
     })
 
     if (!existingUser) {
@@ -132,7 +134,7 @@ export async function DELETE(
     }
 
     await prisma.user.delete({
-      where: { id: params.id }
+      where: { id: resolvedParams.id }
     })
 
     return NextResponse.json({
