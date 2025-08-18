@@ -1,17 +1,43 @@
 import { withAuth } from "next-auth/middleware"
+import { NextResponse } from "next/server"
+import type { NextRequest } from "next/server"
+
+// Security headers
+const securityHeaders = {
+  'X-DNS-Prefetch-Control': 'on',
+  'Strict-Transport-Security': 'max-age=63072000; includeSubDomains; preload',
+  'X-XSS-Protection': '1; mode=block',
+  'X-Frame-Options': 'DENY',
+  'X-Content-Type-Options': 'nosniff',
+  'Referrer-Policy': 'origin-when-cross-origin',
+  'Permissions-Policy': 'camera=(), microphone=(), geolocation=()',
+}
+
+function addSecurityHeaders(response: NextResponse) {
+  Object.entries(securityHeaders).forEach(([key, value]) => {
+    response.headers.set(key, value)
+  })
+  return response
+}
 
 export default withAuth(
   function middleware(req) {
     const { pathname } = req.nextUrl
     const { token } = req.nextauth
+    const response = NextResponse.next()
+
+    // Add security headers to all responses
+    addSecurityHeaders(response)
 
     // Redirect authenticated users away from auth pages
     if (token && (pathname.startsWith('/login') || pathname.startsWith('/register'))) {
       if (token.role === 'ADMIN') {
-        return Response.redirect(new URL('/admin', req.url))
+        return NextResponse.redirect(new URL('/admin', req.url))
       }
-      return Response.redirect(new URL('/dashboard', req.url))
+      return NextResponse.redirect(new URL('/dashboard', req.url))
     }
+
+    return response
   },
   {
     callbacks: {

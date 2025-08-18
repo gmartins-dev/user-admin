@@ -27,8 +27,22 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pt-BR" suppressHydrationWarning>
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              try {
+                if (localStorage.getItem('user-admin-theme') === 'dark') {
+                  document.documentElement.classList.add('dark')
+                }
+              } catch (e) {}
+            `,
+          }}
+        />
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen bg-background`}
+        suppressHydrationWarning
       >
         <ThemeProvider defaultTheme="light" storageKey="user-admin-theme">
           <AuthProvider>

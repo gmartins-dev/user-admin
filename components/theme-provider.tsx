@@ -28,29 +28,37 @@ export function ThemeProvider({
   storageKey = "user-admin-theme",
   ...props
 }: ThemeProviderProps) {
-  const [theme, setTheme] = useState<Theme>(() => {
-    if (typeof window === "undefined") return defaultTheme
+  const [theme, setTheme] = useState<Theme>(defaultTheme)
+  const [mounted, setMounted] = useState(false)
+
+  useEffect(() => {
+    setMounted(true)
     
     try {
       const storedTheme = localStorage.getItem(storageKey) as Theme
       if (storedTheme) {
-        return storedTheme
+        setTheme(storedTheme)
+        return
       }
 
       const systemPrefersDark = window.matchMedia(
         "(prefers-color-scheme: dark)"
       ).matches
-      return systemPrefersDark ? "dark" : defaultTheme
+      
+      const finalTheme = systemPrefersDark ? "dark" : defaultTheme
+      setTheme(finalTheme)
     } catch (e) {
-      return defaultTheme
+      setTheme(defaultTheme)
     }
-  })
+  }, [defaultTheme, storageKey])
 
   useEffect(() => {
+    if (!mounted) return
+    
     const root = window.document.documentElement
     root.classList.remove("light", "dark")
     root.classList.add(theme)
-  }, [theme])
+  }, [theme, mounted])
 
   const value = {
     theme,
@@ -58,13 +66,24 @@ export function ThemeProvider({
       setTheme((prevTheme) => {
         const newTheme = prevTheme === "light" ? "dark" : "light"
         try {
-          localStorage.setItem(storageKey, newTheme)
+          if (mounted) {
+            localStorage.setItem(storageKey, newTheme)
+          }
         } catch (e) {
           console.error("Failed to set theme in localStorage", e)
         }
         return newTheme
       })
     },
+  }
+
+  // Evita flash durante hidratação
+  if (!mounted) {
+    return (
+      <ThemeProviderContext.Provider {...props} value={value}>
+        {children}
+      </ThemeProviderContext.Provider>
+    )
   }
 
   return (
