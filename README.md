@@ -18,35 +18,31 @@ Uma aplicação web completa de gerenciamento de usuários desenvolvida com **Ne
 - **Controle de Acesso**: Proteção de rotas por nível de permissão
 - **Interface Moderna**: Design responsivo com suporte a modo escuro
 
-## 🚀 Melhorias Implementadas
+## 🚀 Funcionalidades Implementadas
 
 ### Performance & Cache
-- **Cache Inteligente**: Sistema de cache para estatísticas e listagem de usuários
-- **Loading States**: Componentes skeleton para melhor UX
-- **Otimização de Imagens**: Configuração avançada do Next.js
+- **Cache Inteligente**: Sistema de cache Next.js para estatísticas e listagem de usuários (`lib/cache.ts`)
+- **Loading States**: Componentes skeleton para melhor UX durante carregamento
+- **Turbopack**: Desenvolvimento mais rápido com `--turbopack` habilitado
 
 ### Segurança
-- **Rate Limiting**: Proteção contra ataques de força bruta
+- **Headers de Segurança**: Proteção contra XSS, clickjacking e outros ataques via middleware
 - **Validações Robustas**: Senhas complexas e validação de domínios de email
-- **Headers de Segurança**: Proteção contra XSS, clickjacking e outros ataques
-- **Middleware Avançado**: Controle rigoroso de acesso e redirecionamentos
-
-### Monitoramento
-- **Sistema de Logs**: Logging estruturado para auditoria
-- **Métricas**: Coleta de métricas de uso da aplicação
-- **Error Tracking**: Rastreamento de erros em produção
+- **Middleware Avançado**: Controle rigoroso de acesso e redirecionamentos baseado em roles
+- **Hash de Senhas**: bcryptjs com salt rounds seguros
+- **Proteção CSRF**: Proteção nativa do NextAuth.js
 
 ### UX/UI
-- **Hooks Customizados**: Hooks reutilizáveis para operações async e debounce
-- **Feedback do Usuário**: Sistema de avaliação e feedback
-- **Acessibilidade**: Componentes otimizados para screen readers
-- **SEO Otimizado**: Meta tags e dados estruturados para melhor indexação
-- **Hidratação Segura**: Prevenção de erros de hidratação SSR/Client
+- **Hooks Customizados**: Hooks reutilizáveis para operações async, debounce, localStorage e mais (`hooks/index.ts`)
+- **Sistema de Feedback**: Componente completo de avaliação com estrelas e comentários
+- **SEO Otimizado**: Meta tags e dados estruturados para melhor indexação (`lib/seo.ts`)
+- **Hidratação Segura**: Prevenção de erros de hidratação SSR/Client com ThemeProvider
+- **Notificações**: Sistema de toast com Sonner para feedback visual
 
 ### Testes
-- **Testes Unitários**: Configuração completa com Jest e Testing Library
-- **Cobertura de Código**: Métricas de cobertura configuradas
-- **Testes de Componentes**: Testes para componentes React
+- **Configuração Jest**: Setup completo com Jest e Testing Library
+- **Ambiente de Teste**: Configurado para componentes React com jsdom
+- **Scripts de Teste**: Comandos para execução, watch mode e cobertura de código
 
 ## 🔧 Correções Técnicas
 
@@ -78,14 +74,16 @@ const [mounted, setMounted] = useState(false)
 
 - **Framework**: Next.js 15 (App Router)
 - **Linguagem**: TypeScript
-- **Estilização**: Tailwind CSS + Shadcn/ui
+- **Estilização**: Tailwind CSS 4 + Shadcn/ui
 - **Banco de Dados**: SQLite + Prisma ORM
-- **Autenticação**: NextAuth.js
+- **Autenticação**: NextAuth.js v4
 - **Validação**: Zod + React Hook Form
 - **API Externa**: ViaCEP para consulta de endereços
 - **Hash de Senhas**: bcryptjs
 - **Notificações**: Sonner (toast)
+- **Ícones**: Lucide React
 - **Tema**: Sistema customizado para modo claro/escuro
+- **Gerenciador**: pnpm
 
 ## 📋 Pré-requisitos
 
@@ -96,7 +94,7 @@ const [mounted, setMounted] = useState(false)
 
 ### 1. Clone o repositório
 ```bash
-git clone <url-do-repositorio>
+git clone https://github.com/gmartins-dev/user-admin
 cd user-admin
 ```
 
@@ -159,10 +157,18 @@ A aplicação estará disponível em `http://localhost:3000`
 │   ├── admin/                    # Componentes administrativos
 │   ├── auth/                     # Componentes de autenticação
 │   ├── dashboard/                # Componentes do dashboard
-│   └── ui/                       # Componentes de UI (Shadcn)
+│   ├── ui/                       # Componentes de UI (Shadcn)
+│   ├── client-only.tsx           # Componente para hidratação segura
+│   ├── feedback-dialog.tsx       # Sistema de feedback com avaliações
+│   ├── theme-provider.tsx        # Provider de temas
+│   └── theme-toggle.tsx          # Toggle de tema claro/escuro
+├── hooks/                        # Hooks customizados
+│   └── index.ts                  # Hooks para async, debounce, localStorage, etc.
 ├── lib/                          # Utilitários e configurações
 │   ├── auth.ts                   # Configuração NextAuth.js
+│   ├── cache.ts                  # Sistema de cache Next.js
 │   ├── db.ts                     # Cliente Prisma
+│   ├── seo.ts                    # Utilitários de SEO e meta tags
 │   ├── utils.ts                  # Utilitários gerais
 │   └── validations.ts            # Schemas de validação Zod
 ├── prisma/                       # Configuração do banco
@@ -176,27 +182,47 @@ A aplicação estará disponível em `http://localhost:3000`
 
 ```bash
 # Desenvolvimento
-pnpm dev                    # Inicia servidor de desenvolvimento
+pnpm dev                    # Inicia servidor de desenvolvimento (com Turbopack)
 
 # Banco de dados
 pnpm db:push               # Aplica mudanças no schema
 pnpm db:studio             # Abre Prisma Studio
 pnpm db:seed               # Popula banco com dados iniciais
 pnpm db:reset              # Reseta e popula o banco
+pnpm db:migrate            # Executa migrações
+pnpm db:generate           # Gera cliente Prisma
 
 # Produção
 pnpm build                 # Build para produção
 pnpm start                 # Inicia servidor de produção
+
+# Qualidade de código
 pnpm lint                  # Executa linter
+pnpm lint:fix              # Corrige problemas do linter automaticamente
+pnpm type-check            # Verifica tipos TypeScript
+
+# Testes
+pnpm test                  # Executa testes
+pnpm test:watch            # Executa testes em modo watch
+pnpm test:coverage         # Executa testes com cobertura
+
+# Análise
+pnpm analyze               # Analisa bundle da aplicação
 ```
 
 ## 🛡️ Segurança
 
-- **Autenticação**: Implementada com NextAuth.js
-- **Autorização**: Middleware protege rotas baseado em roles
+- **Autenticação**: Implementada com NextAuth.js v4
+- **Autorização**: Middleware protege rotas baseado em roles (USER/ADMIN)
 - **Validação**: Validação client-side e server-side com Zod
 - **Hash de Senhas**: bcryptjs com salt rounds seguros
 - **Proteção CSRF**: Proteção nativa do NextAuth.js
+- **Headers de Segurança**:
+  - X-Frame-Options: DENY
+  - X-Content-Type-Options: nosniff
+  - X-XSS-Protection: 1; mode=block
+  - Strict-Transport-Security
+  - Referrer-Policy: origin-when-cross-origin
 - **Sanitização**: Validação de entrada em todas as APIs
 
 ## 📝 Validações Implementadas
@@ -224,27 +250,81 @@ pnpm lint                  # Executa linter
 - **Uso**: Consulta de endereços por CEP
 - **Cache**: Revalidação a cada 1 hora
 
+## ⚡ Sistema de Cache
+
+O projeto implementa um sistema de cache inteligente usando `unstable_cache` do Next.js:
+
+### Cache de Estatísticas (`getUserStats`)
+- **Revalidação**: 5 minutos (300 segundos)
+- **Tags**: `['users']`
+- **Dados**: Total de usuários, admins, usuários regulares e recentes
+
+### Cache de Usuários (`getCachedUsers`)
+- **Revalidação**: 1 minuto (60 segundos)
+- **Tags**: `['users']`
+- **Dados**: Lista completa de usuários com informações básicas
+
+### Invalidação de Cache
+- Automática via tags quando dados de usuários são modificados
+- Manual via revalidação por tempo determinado
+
+## 🎣 Hooks Customizados
+
+O projeto inclui uma biblioteca robusta de hooks reutilizáveis em `hooks/index.ts`:
+
+### `useAsyncOperation<T>()`
+- Gerencia estados de loading, erro e sucesso para operações assíncronas
+- Integração automática com toast notifications
+- Controle de execução e reset de estados
+
+### `useDebounce<T>(value, delay)`
+- Implementa debounce para otimizar performance em inputs
+- Reduz chamadas de API em tempo real
+
+### `useMediaQuery(query)`
+- Hook para responsividade baseado em media queries
+- Detecta mudanças no tamanho da tela em tempo real
+
+### `useInfiniteScroll(callback, threshold)`
+- Implementa scroll infinito para listas grandes
+- Configurable threshold para trigger do callback
+
+### `useLocalStorage<T>(key, initialValue)`
+- Hook para localStorage com SSR safety
+- Gerencia hidratação segura entre servidor e cliente
+- Tratamento de erros automático
+
 ## 🎨 Design System
 
-- **Framework**: Tailwind CSS
-- **Componentes**: Shadcn/ui
+- **Framework CSS**: Tailwind CSS 4
+- **Componentes**: Shadcn/ui com Radix UI
 - **Abordagem**: Mobile-first, responsivo
 - **Tema**: Sistema de temas com suporte a modo claro/escuro/sistema
-- **Tipografia**: Geist Sans e Geist Mono
+- **Ícones**: Lucide React
+- **Tipografia**: Fontes do sistema otimizadas
+- **Animações**: Componentes com transições suaves
 
 ## 🔧 Configurações de Desenvolvimento
 
 ### ESLint
-- Configuração padrão do Next.js
+- Configuração padrão do Next.js 15
 - Regras TypeScript habilitadas
+- Suporte para JSX e React hooks
 
 ### TypeScript
 - Strict mode habilitado
 - Paths configurados para imports absolutos
+- Tipos customizados para NextAuth
 
 ### Tailwind CSS
-- Configuração customizada
+- Configuração v4 com PostCSS
 - Plugins Shadcn/ui integrados
+- Classes utilitárias personalizadas
+
+### Jest
+- Configuração para testes unitários
+- Testing Library integrada
+- Ambiente jsdom para componentes React
 
 ## 📱 Responsividade
 
@@ -255,16 +335,17 @@ pnpm lint                  # Executa linter
 
 ## 🚦 Status do Projeto
 
-✅ **Concluído**
-- [x] Autenticação e autorização
-- [x] CRUD de usuários
-- [x] Dashboard administrativo
-- [x] Validação de formulários
-- [x] Integração com API de CEP
-- [x] Interface responsiva
-- [x] Modo escuro/claro
-- [x] Documentação completa
-
----
-
-**Desenvolvido com ❤️ usando Next.js e TypeScript**
+✅ **Implementado**
+- [x] Autenticação e autorização com roles
+- [x] CRUD de usuários completo
+- [x] Dashboard administrativo com estatísticas
+- [x] Validação de formulários robusta
+- [x] Integração com API de CEP (ViaCEP)
+- [x] Interface responsiva e moderna
+- [x] Sistema de temas (claro/escuro/sistema)
+- [x] Cache inteligente para performance
+- [x] Sistema de feedback dos usuários
+- [x] SEO otimizado com meta tags
+- [x] Hooks customizados reutilizáveis
+- [x] Configuração de testes
+- [x] Headers de segurança

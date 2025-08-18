@@ -2,7 +2,7 @@ import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { ModeToggle } from "@/components/theme-toggle"
-import { Shield, Users, UserPlus, ArrowRight, CheckCircle } from "lucide-react"
+import { ShieldUser , Users, UserPlus, ArrowRight, CheckCircle, ContactRound } from "lucide-react"
 
 export default function HomePage() {
   return (
@@ -12,9 +12,9 @@ export default function HomePage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center py-6">
             <div className="flex items-center space-x-2">
-              <Shield className="h-8 w-8 text-primary" />
+              <ContactRound className="h-8 w-8 text-primary" />
               <h1 className="text-2xl font-bold text-foreground">
-                Sistema de Usuários
+                User Manager
               </h1>
             </div>
             <div className="flex items-center space-x-4">
@@ -116,7 +116,7 @@ export default function HomePage() {
 
           <Card className="border-border bg-card">
             <CardHeader>
-              <Shield className="h-12 w-12 text-destructive mb-4" />
+              <ShieldUser  className="h-12 w-12 text-destructive mb-4" />
               <CardTitle>Painel Admin</CardTitle>
               <CardDescription>
                 Gerenciamento completo de usuários com permissões administrativas
